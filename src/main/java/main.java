@@ -23,32 +23,13 @@ public class main {
         String url = entrada.nextLine();
         Document doc = Jsoup.connect(url).get();
 
-        BufferedWriter writer = null;
-        try
-        {
-           writer = new BufferedWriter( new FileWriter("test.txt"));
-            writer.write(doc.toString());
-
-        }
-        catch ( IOException e)
-        {
-        }
-
-        FileReader in = new FileReader("test.txt");
-        BufferedReader br = new BufferedReader(in);
-        int n = 0;
-        while (br.readLine() != null) {
-            n++;
-        }
+        int n = doc.html().split("\n").length;
 
         System.out.println("El recuso tiene " + n + " Lineas." );
-        in.close();
-
 
 
         Elements parrafos = doc.select("p");
         System.out.println("El documento tiene " + parrafos.size() + " parrafos.");
-
 
 
         Elements imagenes = doc.select("img");
@@ -77,7 +58,7 @@ public class main {
 
             String ActionURL = (formPost.attr("action"));
             Document docF = Jsoup.connect(url + ActionURL).data("asignatura", "practica1").post();
-            System.out.println(docF.toString());
+            System.out.println(docF);
 
 
         }
