@@ -23,6 +23,7 @@ public class main {
         String url = entrada.nextLine();
         Document doc = Jsoup.connect(url).get();
 
+        doc.outputSettings().prettyPrint(false);
         int n = doc.html().split("\n").length;
 
         System.out.println("El recuso tiene " + n + " Lineas." );
@@ -32,7 +33,7 @@ public class main {
         System.out.println("El documento tiene " + parrafos.size() + " parrafos.");
 
 
-        Elements imagenes = doc.select("img");
+        Elements imagenes = parrafos.select("img");
         System.out.println(String.format("El documento tiene " + imagenes.size() + " imagenes."));
 
         Elements formulariosGet = doc.select("form[method=get]");
@@ -56,8 +57,8 @@ public class main {
                 System.out.println("Input type: " + input.attr("type") + "\n");
             }
 
-            String ActionURL = (formPost.attr("action"));
-            Document docF = Jsoup.connect(url + ActionURL).data("asignatura", "practica1").post();
+            String ActionURL = (formPost.absUrl("action"));
+            Document docF = Jsoup.connect(ActionURL).data("asignatura", "practica1").post();
             System.out.println(docF);
 
 
